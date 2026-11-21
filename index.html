@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+    <meta name="theme-color" content="#0a1018">
+    <title>Pocket Tetro — Console Edition</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div id="toast" role="status" aria-live="polite"></div>
+        <section id="lobby" class="screen active">
+            <div class="lobby-shell">
+                <header class="topbar"><button class="profile-chip" data-open="profile"><span class="avatar"
+                            id="topAvatar">◈</span><span><b id="topNick">Гость</b><small id="topId">Без ID ·
+                                Офлайн</small></span></button>
+                    <div class="top-actions"><button class="icon-btn" data-open="mail" aria-label="Почта">✉<i
+                                id="mailDot"></i></button><button class="icon-btn" data-open="settings"
+                            aria-label="Настройки">⚙</button></div>
+                </header>
+                <main class="lobby-main">
+                    <div class="brand"><span class="brand-kicker">THE POCKET ARCADE</span>
+                        <h1>POCKET <em>TETRO</em></h1>
+                        <p>BUILD · COMBO · SURVIVE</p>
+                    </div>
+                    <div class="main-buttons"><button class="hero-btn" data-open="setup">▶ &nbsp; ИГРАТЬ</button><button
+                            class="menu-btn" data-open="modes">▦ &nbsp; РЕЖИМЫ</button><button class="menu-btn"
+                            data-open="rating">🏆 &nbsp; РЕЙТИНГ</button></div>
+                    <div class="tiles"><button data-open="achievements">🏅<span>Достижения</span></button><button
+                            data-open="skins">◈<span>Скины</span></button><button
+                            data-open="vip">♛<span>PLUS</span></button></div>
+                </main>
+                <footer class="lobby-footer"><button class="subtle-link" data-open="promo">🎁
+                        Промокод</button><span>v0.3 · OFFLINE</span><span id="networkStatus" class="net-status"
+                        aria-live="polite"><i></i><span>Офлайн</span></span></footer>
+            </div>
+        </section>
+        <section id="gameScreen" class="screen">
+            <div class="console">
+                <div class="console-head"><button id="backLobby" class="small-btn">‹ Лобби</button><b>POCKET
+                        <span>TETRO</span></b>
+                    <div><button id="gameHelp" class="small-btn" aria-label="Правила">?</button><button id="pauseBtn"
+                            class="small-btn" aria-label="Пауза">Ⅱ</button></div>
+                </div>
+                <div class="bezel">
+                    <div class="hud">
+                        <div>СЧЁТ<b id="score">0</b></div>
+                        <div>РЕКОРД<b id="best">0</b></div>
+                        <div>УРОВЕНЬ<b id="level">1</b></div>
+                        <div>ЛИНИИ<b id="lines">0</b></div>
+                    </div>
+                    <div class="game-layout">
+                        <div class="board-wrap"><canvas id="board" width="270" height="660"
+                                aria-label="Игровое поле"></canvas>
+                            <div id="gameOverlay" class="game-overlay hidden"></div>
+                        </div>
+                        <aside class="side-panel"><button id="nextToggle" class="next-box"
+                                title="Показать следующие фигуры"><span>ДАЛЬШЕ ⌄</span><canvas id="nextCanvas"
+                                    width="96" height="160"></canvas><small id="nextLabel">1 из 3</small></button>
+                            <div class="side-stat">COMBO<b id="combo">×0</b>
+                                <div class="flame" id="flame">♨</div>
+                            </div>
+                            <div class="side-stat">PULSE<b id="pulse">0/5</b>
+                                <div class="pulse-track">
+                                    <div id="pulseFill"></div>
+                                </div>
+                            </div>
+                            <div class="side-stat">ТЕМП<b id="speedLabel">1×</b></div>
+                            <div id="labTools" class="lab-tools hidden"><button id="labPlaceTool">▣
+                                    Установить</button><button id="labChoose">▦ Фигура</button><button id="labRotate">↷
+                                    Поворот</button><button id="labErase">⌫ Стереть</button><button id="labUndo">↶
+                                    Отмена</button><button id="labClear">✕ Очистить</button><button id="labTest">▶
+                                    Тест</button><button id="labMode">⇄ Режим</button><button id="labHint">✧
+                                    Подсказка</button></div>
+                        </aside>
+                    </div>
+                    <div class="screen-foot"><span id="modeLabel">Обычный</span><span id="timerLabel">00:00</span></div>
+                </div>
+                <div class="control-divider">POCKET CONTROLS</div>
+                <div class="controls" id="controls">
+                    <div class="dpad control-group" id="dpad"><button data-act="up" aria-label="Вверх">▲</button><button
+                            data-act="left" aria-label="Влево">◀</button><button data-act="down"
+                            aria-label="Вниз">▼</button><button data-act="right" aria-label="Вправо">▶</button><span
+                            class="dpad-center"></span></div>
+                    <div class="action-pad control-group" id="actionPad"><button data-act="ccw"
+                            aria-label="Поворот против часовой стрелки">↶</button><button data-act="cw"
+                            aria-label="Поворот по часовой стрелке">↷</button><button data-act="drop"
+                            aria-label="Быстрый спуск">⇣</button></div>
+                </div>
+                <div class="console-bottom"><button id="gameMenuBtn">☰ Меню</button><button id="gameRestartBtn">↻
+                        Заново</button><span class="speaker">▥▥▥▥▥</span></div>
+            </div>
+        </section>
+        <div id="modalLayer" class="modal-layer hidden" role="presentation">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <header class="modal-head">
+                    <h2 id="modalTitle">Меню</h2><button id="closeModal" class="icon-btn"
+                        aria-label="Закрыть">×</button>
+                </header>
+                <div id="modalBody" class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/game.js"></script>
+</body>
+
+</html>
